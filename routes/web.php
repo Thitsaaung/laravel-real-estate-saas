@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Models\Property;
+use App\Http\Controllers\PropertyController;
 
 // About Page အတွက် လမ်းကြောင်း
 Route::get('/', function () {
@@ -18,12 +19,5 @@ Route::get("/about", function () {
     return view('about');
 });
 
-Route::get("/properties", function () {
-    // properties.blade.php ဖိုင်ကို လှမ်းခေါ်ခိုင်းလိုက်တာပါ
-    // return view("properties");
-
-    $properties = Property::all(); // ဒေတာဘေ့စ်ထဲက properties အားလုံးကို လှမ်းဆွဲလိုက်တာပါ
-
-    return view("properties", compact("properties")); // properties.blade.php ဖိုင်ကို လှမ်းခေါ်ပြီး properties အားလုံးကို ပေးပို့လိုက်တာပါ
-});
+Route::get("/properties", [PropertyController::class, "index"]);
 
