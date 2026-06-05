@@ -25,14 +25,17 @@
 
                         <h3 class="text-xl font-bold text-gray-900 mb-2 truncate">{{ $property->title }}</h3>
                         <p class="text-gray-500 text-sm mb-4 flex items-center">
-                            📍 <span class="ml-1 font-medium text-gray-700">{{ $property->location }}</span>
+                            📍 <span class="ml-1 font-medium text-gray-700">{{ $property->location }}:</span>
+                            <span class="ml-1 font-medium text-gray-700">Bedrooms- {{ $property->bedrooms }}</span>
+                            <div></div>
+                            <span class="ml-1 font-medium text-gray-700">Area: {{ $property->area_sqf }} sqf</span>
                         </p>
                         <p class="text-gray-600 text-sm mb-6 line-clamp-3 leading-relaxed">{{ $property->description }}</p>
                         
                         <div class="flex items-center justify-between border-t border-gray-100 pt-4">
                             <span class="text-2xl font-black text-indigo-600">${{ number_format($property->price, 2) }}</span>
                             <button class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-4 py-2 rounded-xl transition-colors duration-200">
-                                View Details
+                                <a href="/properties/{{ $property->id}}" class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-4 py-2 rounded-xl transition-colors duration-200 text-center">View Details</a>
                             </button>
                         </div>
                     </div>

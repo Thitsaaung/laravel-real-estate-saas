@@ -22,7 +22,9 @@ class PropertyFactory extends Factory
             'description' => $this->faker->paragraph(),
             'price' => $this->faker->randomFloat(2, 50000, 500000),
             'location' => $this->faker->city(),
-            'type' => $this->faker->randomElement(['condo', 'villa', 'land']),
+            'bedrooms' => $this->faker->numberBetween(1, 5),
+            'area_sqf' => $this->faker->numberBetween(500, 5000),
+            'type' => $this->faker->randomElement(['condo', 'villa', 'land']),  
         ];
     }
 }

@@ -17,6 +17,8 @@ return new class extends Migration
             $table->text('description')->nullable(); // အသေးစိတ် အကြောင်းအရာ
             $table->decimal('price', 15,2);     // ဈေးနှုန်း (ဥပမာ - 150000.00)
             $table->string('location'); // တည်နေရာ (ဥပမာ - Bangkok)
+            $table->integer('bedrooms')->nullable(); // အိပ်ခန်း အရေအတွက် (အိမ်အတွက်)
+            $table->integer('area_sqf')->nullable(); // အကျယ် (စတုရန်းပေ)
             $table->string('type'); // အိမ်/ခြံ အမျိုးအစား (ဥပမာ - Condo, Villa, Land)
             $table->timestamps(); // Created at and Updated at timestamps
         });

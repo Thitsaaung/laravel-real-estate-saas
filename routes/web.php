@@ -21,3 +21,5 @@ Route::get("/about", function () {
 
 Route::get("/properties", [PropertyController::class, "index"]);
 
+Route::get("/properties/{property}", [PropertyController::class, "show"]);
+
