@@ -23,8 +23,13 @@ Route::get("/properties", [PropertyController::class, "index"]);
 
 Route::get("/properties/create", [PropertyController::class, "create"]);
 
+Route::get("/properties/{id}/edit", [PropertyController::class, 'edit']);
+
 Route::get("/properties/{property}", [PropertyController::class, "show"]);
 
 Route::post("/properties", [PropertyController::class, "store"]);
 
+Route::put("/properties/{id}", [PropertyController::class, 'update']);
+
+Route::delete("/properties/{id}", [PropertyController::class, 'destroy']);
 

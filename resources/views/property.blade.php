@@ -52,6 +52,19 @@
                 </button>
             </div>
         </div>
+
+        <div class="mt-4 flex space-x-2">
+            <!-- ✏️ Edit ခလုတ် -->
+            <a href="/properties/{{ $property->id }}/edit" class="bg-yellow-500 text-white px-3 py-1 rounded-lg text-sm font-semibold">Edit</a>
+
+            <!-- 🗑️ Delete ခလုတ် (Form နဲ့ ပို့ရပါတယ်) -->
+            <form action="/properties/{{ $property->id }}" method="POST" onsubmit="return confirm('Are you sure deleting this?')">
+            
+            @csrf
+            @method('DELETE') <!-- Delete Method အဖြစ် ပြောင်းလဲခြင်း -->
+                <button type="submit" class="bg-red-500 text-white px-3 py-1 rounded-lg text-sm font-semibold">Delete</button>
+            </form>
+</div>
     </div>
 
 </body>

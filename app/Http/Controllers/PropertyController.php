@@ -59,5 +59,39 @@ class PropertyController extends Controller
         // ၄။ အားလုံးပြီးရင် အိမ်ခြံမြေစာရင်းစာမျက်နှာ (Catalog) ဆီသို့ ပြန်လွှတ် (Redirect) မယ်
         return redirect("/properties");
     }
+
+    public function edit($id)
+    {   
+        // ၁။ ဒေတာဟောင်းတွေကို Form ထဲထည့်ပြီး ပြသမည့် စာမျက်နှာ (Edit View)
+        $property = Property::findOrFail($id);
+        return view('edit', compact('property'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        // ဒေတာတွေကို Form Validation အရင်စစ်မယ်
+        $request->validate([
+            'title' => 'required|min:5|max:255',
+            'price' => 'required|numeric|min:1',
+            'location' => 'required|string',
+        ]);
+
+        $property = Property::findOrFail($id);
+        $property->title = $request->title;
+        $property->price = $request->price;
+        $property->location = $request->location;
+
+        $property->save();  // ရှိပြီးသား Row ထဲမှာပဲ ထပ်ပြီး သိမ်းသွားမှာပါ
+
+        return redirect('/properties');
+    }
+
+    public function destroy($id)
+    {
+        $property = Property::findOrFail($id);
+        $property->delete(); // database ထဲကဖျက်ပြီ
+
+        return redirect('/properties');
+    }
 }
 
