@@ -3,100 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add New Property</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Edit Property | DERBY MODE</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-gray-50 font-sans min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+<body class="bg-gray-50 font-sans antialiased text-gray-900">
 
-    <div class="max-w-2xl mx-auto bg-white rounded-3xl shadow-lg p-8 sm:p-12 border border-gray-100">
-        
-        <a href="/properties" class="inline-flex items-center text-sm font-semibold text-indigo-600 hover:text-indigo-500 mb-6 transition-colors">
-            ← Back to Catalog
-        </a>
+    <!-- 🌐 Navigation Bar -->
+    <nav class="bg-white shadow-xs border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-3xl px-4 mx-auto">
+            <div class="flex justify-between h-16 items-center">
+                <a href="/properties" class="text-gray-500 hover:text-indigo-600 font-medium flex items-center space-x-2 transition-colors">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <span>Cancel & Go Back</span>
+                </a>
+                <span class="text-xl font-black tracking-wider text-indigo-600">DERBY<span class="text-gray-900">ESTATE</span></span>
+            </div>
+        </div>
+    </nav>
 
-        <h2 class="text-3xl font-extrabold text-gray-950 mb-8 tracking-tight">🏠 Add New Property Listing</h2>
-
-        <form action="/properties/{{ $property->id }}" method="POST" class="space-y-6">
+    <!-- 📝 Form Container -->
+    <main class="max-w-3xl px-4 mx-auto py-12">
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 sm:p-10">
             
-            @csrf
-            @method('PUT')  <!-- ဒါက အလွန်အရေးကြီးပါတယ် (HTML က PUT တိုက်ရိုက်မသိလို့) -->
-
-
-
-            <div>
-                <label class="block text-sm font-bold text-gray-700 mb-2">Property Title</label>
-                <input type="text" name="title" value="{{ old('title', $property->title) }}" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-900" placeholder="e.g., Luxury Penthouse Downtown">
-
-                @error('title')
-                    <p class="text-red-500 text-xs font-semibold mt-1">{{ $message }}</p>
-                @enderror
+            <div class="mb-8">
+                <h1 class="text-2xl font-extrabold text-gray-900 tracking-tight">Edit Property Details</h1>
+                <p class="text-gray-500 mt-1">Update the information below to modify your property listing.</p>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-2">Price ($)</label>
-                    <input type="number" name="price" value="{{ old('price', $property->price) }}" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-900" placeholder="e.g., 250000">
+            <!-- Laravel Form -->
+            <form action="/properties/{{ $property->id }}" method="POST" class="space-y-6">
+                @csrf
+                @method('PUT') <!-- 👈 Laravel Update Method -->
 
-                    @error('price')
-                        <p class="text-red-500 text-xs font-semibold mt-1">{{ $message }}</p>
+                <!-- Property Title Input -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Property Title</label>
+                    <input type="text" name="title" value="{{ old('title', $property->title) }}" 
+                           class="w-full px-4 py-3 rounded-xl border @error('title') border-red-500 bg-red-50/10 @else border-gray-200 focus:border-indigo-500 @enderror focus:outline-hidden transition-colors text-gray-900">
+                    @error('title')
+                        <p class="text-red-500 text-xs mt-1.5 font-medium flex items-center space-x-1">
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                            <span>{{ $message }}</span>
+                        </p>
                     @enderror
                 </div>
-                <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-2">Location (City)</label>
-                    <input type="text" name="location" value="{{ old('location', $property->location) }}" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-900" placeholder="e.g., Yangon">
 
-                    @error('location')
-                        <p class="text-red-500 text-xs font-semibold mt-1">{{ $message }}</p>
-                    @enderror
+                <!-- Price & Location Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <!-- Price Input -->
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Price ($)</label>
+                        <input type="number" name="price" value="{{ old('price', $property->price) }}" 
+                               class="w-full px-4 py-3 rounded-xl border @error('price') border-red-500 bg-red-50/10 @else border-gray-200 focus:border-indigo-500 @enderror focus:outline-hidden transition-colors text-gray-900">
+                        @error('price')
+                            <p class="text-red-500 text-xs mt-1.5 font-medium flex items-center space-x-1">
+                                <i class="fa-solid fa-circle-exclamation"></i>
+                                <span>{{ $message }}</span>
+                            </p>
+                        @enderror
+                    </div>
+
+                    <!-- Location Input -->
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Location</label>
+                        <input type="text" name="location" value="{{ old('location', $property->location) }}" 
+                               class="w-full px-4 py-3 rounded-xl border @error('location') border-red-500 bg-red-50/10 @else border-gray-200 focus:border-indigo-500 @enderror focus:outline-hidden transition-colors text-gray-900">
+                        @error('location')
+                            <p class="text-red-500 text-xs mt-1.5 font-medium flex items-center space-x-1">
+                                <i class="fa-solid fa-circle-exclamation"></i>
+                                <span>{{ $message }}</span>
+                            </p>
+                        @enderror
+                    </div>
                 </div>
-            </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-2">Bedrooms</label>
-                    <input type="number" name="bedrooms" value="{{ old('bedrooms') }}" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-900" placeholder="e.g., 3">
-
-                    @error('bedrooms')
-                        <p class="text-red-500 text-xs font-semibold mt-1">{{ $message }}</p>
-                    @enderror
+                <!-- Submit Button -->
+                <div class="pt-4">
+                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 rounded-xl shadow-md shadow-indigo-100 hover:shadow-lg transition-all duration-200 cursor-pointer">
+                        Update Property Info
+                    </button>
                 </div>
-                <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-2">Area (Sqft)</label>
-                    <input type="number" name="area_sqft" value="{{ old('area_sqf') }}" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-900" placeholder="e.g., 1500">
+            </form>
 
-                    @error('area_sqf')
-                        <p class="text-red-500 text-xs font-semibold mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-                <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-2">Listing Type</label>
-                    <select name="type" value="{{ old('type') }}" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-900 bg-white">
-                        <option value="Sale">For Sale</option>
-                        <option value="Rent">For Rent</option>
-                    </select>
-
-                    @error('type')
-                        <p class="text-red-500 text-xs font-semibold mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-            </div>
-
-            <div>
-                <label class="block text-sm font-bold text-gray-700 mb-2">Description</label>
-                <textarea name="description" value="{{ old('description') }}" rows="4" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-900" placeholder="Describe the property details here..."></textarea>
-
-                @error('description')
-                    <p class="text-red-500 text-xs font-semibold mt-1">{{ $message }}</p>
-                @enderror
-            </div>
-
-            <div class="pt-4">
-                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 px-6 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg">
-                    Update Property
-                </button>
-            </div>
-        </form>
-    </div>
+        </div>
+    </main>
 
 </body>
 </html>
