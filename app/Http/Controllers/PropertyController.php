@@ -35,10 +35,11 @@ class PropertyController extends Controller
             'title' => 'required|min:5|max:255',
             'price' => 'required|numeric|min:1',
             'location' => 'required|string',
-            'bedrooms' => 'required|integer|min:1',
-            'areq_sqf' => 'required|integer|min:1',
-            'type' => 'required|in:Sale,Rent',
-            'description' => 'required|min:10',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            // 'bedrooms' => 'required|integer|min:1',            
+            // 'areq_sqf' => 'required|integer|min:1',
+            // 'type' => 'required|in:Sale,Rent',
+            // 'description' => 'required|min:10',
         ]);
 
         // ၁။ Property Model အသစ်တစ်ခု ဆောက်မယ်
@@ -48,16 +49,23 @@ class PropertyController extends Controller
         $property->title = $request->title;
         $property->price = $request->price;
         $property->location = $request->location;
-        $property->bedrooms = $request->bedrooms;
-        $property->area_sqf = $request->sqft;
-        $property->type = $request->type;
-        $property->description = $request->description;
+        
+        // ၂။ Image File ရှိမရှိ စစ်ပြီး ရှိရင် storage/app/public/properties ထဲ သိမ်းမယ်
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('properties', 'public');
+            $property->image = $imagePath;
+        }
+
+        // $property->bedrooms = $request->bedrooms;
+        // $property->area_sqf = $request->area_sqf;
+        // $property->type = $request->type;
+        // $property->description = $request->description;
 
         // ၃။ Database ထဲသို့ အပြီးအပိုင် Save (သိမ်းဆည်း) လိုက်မယ်
         $property->save();
         
         // ၄။ အားလုံးပြီးရင် အိမ်ခြံမြေစာရင်းစာမျက်နှာ (Catalog) ဆီသို့ ပြန်လွှတ် (Redirect) မယ်
-        return redirect("/properties");
+        return redirect("/properties")->with('success', 'အိမ်ခြံမြေအချက်အလက်ကို အောင်မြင်စွာ တင်ပြီးပါပြီ!');
     }
 
     public function edit($id)
@@ -91,7 +99,7 @@ class PropertyController extends Controller
         $property = Property::findOrFail($id);
         $property->delete(); // database ထဲကဖျက်ပြီ
 
-        return redirect('/properties');
+        return redirect('/properties')->with('success', 'အိမ်ခြံမြေစာရင်းကို ဖျက်ပစ်လိုက်ပါပြီ!');
     }
 }
 

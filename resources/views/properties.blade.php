@@ -26,6 +26,12 @@
     </nav>
 
     <main class="max-w-7xl px-4 sm:px-6 lg:px-8 mx-auto py-10">
+        @if(session('success'))
+            <div class="mb-6 p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl flex items-center space-x-2 shadow-xs animate-bounce">
+                <i class="fa-solid fa-circle-check text-emerald-500 text-lg"></i>
+                <span class="font-semibold text-sm">{{ session('success') }}</span>
+            </div>
+        @endif
         
         <div class="mb-8">
             <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">Explore Properties</h1>
@@ -37,7 +43,7 @@
                 <div class="bg-white rounded-2xl overflow-hidden shadow-xs border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col h-full">
                     
                     <div class="relative h-48 bg-gray-200 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=800&q=80" alt="Property Image" class="w-full h-full object-cover">
+                        <img src="{{ $property->image ? asset('storage/' . $property->image) : 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=800&q=80' }}" alt="Property Image" class="w-full h-full object-cover">
                         <span class="absolute top-4 left-4 {{ $property->type == 'Sale' ? 'bg-emerald-500' : 'bg-orange-500' }} text-white text-xs font-bold px-3 py-1.5 rounded-lg uppercase tracking-wider">
                             For {{ $property->type ?? 'Sale' }}
                         </span>
@@ -79,7 +85,7 @@
                                     <span>Edit Info</span>
                                 </a>
 
-                                <form action="/properties/{{ $property->id }}" method="POST" onsubmit="return confirm('သေချာသလား သူငယ်ချင်း?')" class="w-full">
+                                <form action="/properties/{{ $property->id }}" method="POST" onsubmit="return confirm('သေချာသလား?')" class="w-full">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="w-full bg-gray-50 hover:bg-red-50 hover:text-red-600 text-gray-500 font-bold py-2.5 rounded-xl text-xs transition-colors flex items-center justify-center space-x-1 border border-gray-200/60">

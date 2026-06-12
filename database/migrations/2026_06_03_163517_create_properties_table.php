@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('location'); // တည်နေရာ (ဥပမာ - Bangkok)
             $table->integer('bedrooms')->nullable(); // အိပ်ခန်း အရေအတွက် (အိမ်အတွက်)
             $table->integer('area_sqf')->nullable(); // အကျယ် (စတုရန်းပေ)
-            $table->string('type'); // အိမ်/ခြံ အမျိုးအစား (ဥပမာ - Condo, Villa, Land)
+            $table->string('type')->nullable(); // အိမ်/ခြံ အမျိုးအစား (ဥပမာ - Condo, Villa, Land)
             $table->timestamps(); // Created at and Updated at timestamps
         });
     }

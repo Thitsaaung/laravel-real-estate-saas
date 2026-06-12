@@ -32,7 +32,7 @@
             </div>
 
             <!-- Laravel Form -->
-            <form action="/properties" method="POST" class="space-y-6">
+            <form action="/properties" method="POST" enctype="multipart/form-data" class="space-y-6">
                 @csrf
 
                 <!-- Property Title Input -->
@@ -74,6 +74,18 @@
                                class="w-full px-4 py-3 rounded-xl border @error('location') border-red-500 bg-red-50/10 @else border-gray-200 focus:border-indigo-500 @enderror focus:outline-hidden transition-colors text-gray-900" 
                                placeholder="e.g. Downtown Yangon">
                         @error('location')
+                            <p class="text-red-500 text-xs mt-1.5 font-medium flex items-center space-x-1">
+                                <i class="fa-solid fa-circle-exclamation"></i>
+                                <span>{{ $message }}</span>
+                            </p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Property Image</label>
+                        <input type="file" name="image" 
+                        class="w-full px-4 py-3 rounded-xl border @error('image') border-red-500 bg-red-50/10 @else border-gray-200 focus:border-indigo-500 @enderror focus:outline-hidden transition-colors text-gray-900 bg-white text-sm file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100">
+                        @error('image')
                             <p class="text-red-500 text-xs mt-1.5 font-medium flex items-center space-x-1">
                                 <i class="fa-solid fa-circle-exclamation"></i>
                                 <span>{{ $message }}</span>
